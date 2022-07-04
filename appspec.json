@@ -1,0 +1,59 @@
+{
+  "settings": [
+	{
+      "id": "retdata",
+      "name": "Output data specification.",
+      "description": "Select if you want to output/pass on the full input data set or only the flight locations (ground speed above antimode).",
+      "defaultValue": "all",
+      "type": "RADIOBUTTONS",
+      "options": [
+        {
+          "value": "all",
+          "displayText": "all data"
+        },
+		        {
+          "value": "flight",
+          "displayText": "only flight locations"
+        }
+      ]
+	}
+  ],
+  "dependencies": {
+    "R": [
+      {
+        "name": "move"
+      },
+	  {
+        "name": "foreach"
+      },
+	  {
+        "name": "multimode"
+      }
+    ]
+  },
+  "license": {
+    "key": "MIT"
+  },
+  "language": "eng",
+  "keywords": [
+	"flight speed",
+    "ground speed",
+	"antimode",
+	"multimode"
+  ],
+  "people": [
+    {
+      "firstName": "Andrea",
+      "middleInitials": null,
+      "lastName": "Kölzsch",
+      "email": "akoelzsch@ab.mpg.de",
+      "roles": ["compiler","author","creator"],
+      "orcid": "0000-0003-0193-1563",
+      "affiliation": "Max-Planck-Institute of Animal Behavior",
+      "affiliationRor": "https://ror.org/026stee22"
+    }
+  ],
+  "documentation" : {
+    "url": "https://github.com/movestore/Flight-Speed-Estimation/blob/main/README.md"
+  }
+}
