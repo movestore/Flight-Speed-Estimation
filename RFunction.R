@@ -14,30 +14,33 @@ rFunction <- function(data,retdata="all")
   #exclude upper outliers 0.999 quantile (maybe adapt)
   pdf(paste0(Sys.getenv(x = "APP_ARTIFACTS_DIR", "/tmp/"), "Modes_Histogrammes.pdf"),width=12,height=8)
   
-  flight <- foreach(datai = data.split) %do% {
+  flightmodes <- foreach(datai = data.split) %do% {
     logger.info(namesIndiv(datai))
     
     #exclude upper outliers 0.999 quantile (maybe adapt)
     gspeed <- datai@data$ground.speed[datai@data$ground.speed<quantile(datai@data$ground.speed,na.rm=TRUE,probs=0.999)]
     
-    #modetest(datai@data$ground.speed) # this takes very long, but can give an indication in case that there are not enough flight data in the input
-    modes <- locmodes(gspeed,mod0=2)
-    
-    plot(modes)
-    hist(gspeed,na.rm=TRUE,breaks=length(gspeed)/100,freq=FALSE,col=rgb(0,0,1,0.1),add=TRUE)
-    
-    return(modes)
+    if (any(!is.na(gspeed)))
+      {
+      #modetest(datai@data$ground.speed) # this takes very long, but can give an indication in case that there are not enough flight data in the input
+      modes <- locmodes(gspeed,mod0=2)
+      
+      plot(modes)
+      hist(gspeed,na.rm=TRUE,breaks=length(gspeed)/100,freq=FALSE,col=rgb(0,0,1,0.1),add=TRUE)
+      
+      return(modes$locations)
+      } else return(NA)
   }
   dev.off()
 
-  modes_table <- as.data.frame(matrix(unlist(lapply(flight,function(x) x$locations)),byrow=TRUE,nc=3))
+  modes_table <- as.data.frame(do.call("rbind", flightmodes))
   names(modes_table) <- c("mode1","antimode","mode2")
   
   modes_table <- data.frame("trackID"=namesIndiv(data),modes_table)
   
-  mode1_avg <- c(mean(modes_table$mode1),sd(modes_table$mode1))
-  antimode_avg <- c(mean(modes_table$antimode),sd(modes_table$antimode))
-  mode2_avg <- c(mean(modes_table$mode2),sd(modes_table$mode2))
+  mode1_avg <- c(mean(modes_table$mode1,na.rm=TRUE),sd(modes_table$mode1,na.rm=TRUE))
+  antimode_avg <- c(mean(modes_table$antimode,na.rm=TRUE),sd(modes_table$antimode,na.rm=TRUE))
+  mode2_avg <- c(mean(modes_table$mode2,na.rm=TRUE),sd(modes_table$mode2,na.rm=TRUE))
   
   modes_table <- rbind(modes_table,data.frame("trackID"=c("mean","sd"),"mode1"=mode1_avg,"antimode"=antimode_avg,"mode2"=mode2_avg))
   
