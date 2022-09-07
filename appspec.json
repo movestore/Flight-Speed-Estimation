@@ -3,7 +3,7 @@
 	{
       "id": "retdata",
       "name": "Output data specification.",
-      "description": "Select if you want to output/pass on the full input data set or only the flight locations (ground speed above antimode).",
+      "description": "Select if you want to output/pass on the full input data set or only the flight locations (ground speed above antimode). Note that this App works properly only if GPS ground.speed is available in your data set.",
       "defaultValue": "all",
       "type": "RADIOBUTTONS",
       "options": [

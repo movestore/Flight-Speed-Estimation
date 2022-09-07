@@ -5,7 +5,7 @@ MoveApps
 Github repository: *github.com/movestore/Flight-Speed-Estimation*
 
 ## Description
-Fits multimodal to ground speed distribution and determines the peaks to filter for flight locations (above minimum). A table of track-specific parameters is provided, including average flight speed.
+Fits multimodal to GPS ground speed distribution and determines the peaks to filter for flight locations (above minimum). A table of track-specific parameters is provided, including average flight speed. This App works only with (instantaneous) GPS ground speed!
 
 ## Documentation
 This App uses the locmodes function from the multimodes package to fit a bimodal to the ground speed distribution of each track/animal. For each track a histogramme with the fitted function is provided. Mode1 (estimated non-flight speed), antimode (minimum between both behaviours) and mode2 (estimated flight speed) are visible by dotted lines in the plot and provided in a .csv table. In the table also average and standard deviation of the three parameters are provided.
@@ -27,7 +27,7 @@ moveStack in Movebank format
 `retdata`: selected if want to output/pass on the full data set (default) or only the flight locations (ground speed above antimode).
 
 ### Null or error handling:
-**Parameter `retdata`:** can only have to viable options
+**Parameter `retdata`:** can only have two viable options
 
 **Data:** If there are no flight data in your input data set, the results might be very unmeaningful and lead to an empty return data set or an error.
 
