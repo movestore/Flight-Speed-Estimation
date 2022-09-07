@@ -12,6 +12,8 @@ This App uses the locmodes function from the multimodes package to fit a bimodal
 
 If selected, only the locations with ground speed above the antimode are passed on, else the complete data set.
 
+Note that this App works properly only if the two movement modes (no flight and flight) properly separate by ground speed. If there are e.g. intermediate behaviours, clear separations might be difficult and results inaccurate.
+
 ### Input data
 moveStack in Movebank format
 
