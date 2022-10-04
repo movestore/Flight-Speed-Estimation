@@ -2,7 +2,7 @@ library(jsonlite)
 source("logger.R")
 source("RFunction.R")
 
-inputFileName = "App-Output Workflow_Instance_002__Filter_Data_by_Season__2022-07-04_08-19-21.rds" #important to set to NULL for movebank-download
+inputFileName = "App-Output 1_Life_Track_White_Stork_SW_Germany__Filter_Data_by_Indiv_Time__2022-07-13_07-44-34.rds" #important to set to NULL for movebank-download
 outputFileName = "output.rds"
 
 args <- list()

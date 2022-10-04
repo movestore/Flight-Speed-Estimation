@@ -26,8 +26,10 @@ rFunction <- function(data,retdata="all")
         #modetest(datai@data$ground.speed) # this takes very long, but can give an indication in case that there are not enough flight data in the input
         modes <- locmodes(gspeed,mod0=2)
         
-        plot(modes)
+        plot(modes,xlab="(ground) speed")
         hist(gspeed,na.rm=TRUE,breaks=length(gspeed)/100,freq=FALSE,col=rgb(0,0,1,0.1),add=TRUE)
+        
+        modes$locations <- c(modes$locations,mean(gspeed[gspeed>modes$locations[2]],na.rm=TRUE),sd(gspeed[gspeed>modes$locations[2]],na.rm=TRUE))
         
         return(modes$locations)
       } else return(NA)
@@ -35,15 +37,18 @@ rFunction <- function(data,retdata="all")
     dev.off()
     
     modes_table <- as.data.frame(do.call("rbind", flightmodes))
-    names(modes_table) <- c("mode1","antimode","mode2")
+    names(modes_table) <- c("mode1","antimode","mode2","mean.above.antimode","sd.above.antimode")
     
     modes_table <- data.frame("trackID"=namesIndiv(data),modes_table)
     
     mode1_avg <- c(mean(modes_table$mode1,na.rm=TRUE),sd(modes_table$mode1,na.rm=TRUE))
     antimode_avg <- c(mean(modes_table$antimode,na.rm=TRUE),sd(modes_table$antimode,na.rm=TRUE))
     mode2_avg <- c(mean(modes_table$mode2,na.rm=TRUE),sd(modes_table$mode2,na.rm=TRUE))
+    meanabove_avg <- c(mean(modes_table$mean.above.antimode,na.rm=TRUE),sd(modes_table$mean.above.antimode,na.rm=TRUE))
+    sdabove_avg <- c(mean(modes_table$sd.above.antimode,na.rm=TRUE),sd(modes_table$sd.above.antimode,na.rm=TRUE))
     
-    modes_table <- rbind(modes_table,data.frame("trackID"=c("mean","sd"),"mode1"=mode1_avg,"antimode"=antimode_avg,"mode2"=mode2_avg))
+    
+    modes_table <- rbind(modes_table,data.frame("trackID"=c("mean","sd"),"mode1"=mode1_avg,"antimode"=antimode_avg,"mode2"=mode2_avg,"mean.above.antimode"=meanabove_avg,"sd.above.antimode"=sdabove_avg))
     
     write.csv(modes_table,file= paste0(Sys.getenv(x = "APP_ARTIFACTS_DIR", "/tmp/"),"groudspeed_modes.csv"),row.names=FALSE)
     
