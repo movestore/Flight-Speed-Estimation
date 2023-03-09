@@ -1,4 +1,4 @@
-# Flight Speed Estimation
+# Extract Two Movement Speeds
 
 MoveApps
 
@@ -25,11 +25,11 @@ moveStack in Movebank format
 
 `groudspeed_modes.csv`: table of fitted model parameters by individual and averages/standard deviations added.
 
-### Parameters 
-`retdata`: selected if want to output/pass on the full data set (default) or only the flight locations (ground speed above antimode).
+### Settings 
+**Output data specification. (`retdata`):** selected if want to output/pass on the full data set (default) or only the flight locations (ground speed above antimode).
 
 ### Null or error handling:
-**Parameter `retdata`:** can only have two viable options
+**Setting `retdata`:** can only have two viable options
 
 **Data:** If there are no flight data in your input data set, the results might be very unmeaningful and lead to an empty return data set or an error.
 
